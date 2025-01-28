@@ -132,12 +132,28 @@
         <seed-data>
             <moqui.basic.EnumerationType description="Contact Mech Type" enumTypeId="contactMechType"/>
             <moqui.basic.Enumeration description="Telecom Number" enumId="ctyTelecomNumber"
-                                     enumTypeId="ContactMechType"/>
+                                     enumTypeId="contactMechType"/>
             <moqui.basic.Enumeration description="Postal Address" enumId="ctyPostalAddress"
-                                     enumTypeId="ContactMechType"/>
+                                     enumTypeId="contactMechType"/>
             <moqui.basic.Enumeration description="Email Address" enumId="ctyEmailAddress"
-                                     enumTypeId="ContactMechType"/>
+                                     enumTypeId="contactMechType"/>
 
+            <customer.contactmech.ContactMech contactMechId="10000" contactMechTypeEnumId="ctyTelecomNumber"/>
+            <customer.contactmech.ContactMech contactMechId="10001" contactMechTypeEnumId="ctyEmailAddress"
+                                              infoString="example@email.com"/>
+            <customer.contactmech.ContactMech contactMechId="10002" contactMechTypeEnumId="ctyPostalAddress"/>
+            <customer.contactmech.ContactMech contactMechId="10003" contactMechTypeEnumId="ctyTelecomNumber"/>
+            <customer.contactmech.ContactMech contactMechId="10004" contactMechTypeEnumId="ctyEmailAddress"
+                                              infoString="example1@email.com"/>
+            <customer.contactmech.ContactMech contactMechId="10005" contactMechTypeEnumId="ctyPostalAddress"/>
+            <customer.contactmech.ContactMech contactMechId="10006" contactMechTypeEnumId="ctyTelecomNumber"/>
+            <customer.contactmech.ContactMech contactMechId="10007" contactMechTypeEnumId="ctyEmailAddress"
+                                              infoString="example2@email.com"/>
+            <customer.contactmech.ContactMech contactMechId="10008" contactMechTypeEnumId="ctyPostalAddress"/>
+            <customer.contactmech.ContactMech contactMechId="10009" contactMechTypeEnumId="ctyTelecomNumber"/>
+            <customer.contactmech.ContactMech contactMechId="10010" contactMechTypeEnumId="ctyEmailAddress"
+                                              infoString="example3@email.com"/>
+            <customer.contactmech.ContactMech contactMechId="10011" contactMechTypeEnumId="ctyPostalAddress"/>
         </seed-data>
 
         <master>
@@ -154,6 +170,17 @@
         <field name="contactNumber" type="text-short"/>
 
         <relationship type="one" related="customer.contactmech.ContactMech"/>
+
+        <seed-data>
+            <customer.telecomnumber.TelecomNumber contactMechId="10000" countryCode="1" areaCode="123"
+                                                  contactNumber="4567890"/>
+            <customer.telecomnumber.TelecomNumber contactMechId="10003" countryCode="2" areaCode="456"
+                                                  contactNumber="1478523690"/>
+            <customer.telecomnumber.TelecomNumber contactMechId="10006" countryCode="3" areaCode="789"
+                                                  contactNumber="5487596842"/>
+            <customer.telecomnumber.TelecomNumber contactMechId="10009" countryCode="4" areaCode="123"
+                                                  contactNumber="1597532584"/>
+        </seed-data>
     </entity>
 
     <entity entity-name="PostalAddress" package="customer.postaladdress">
@@ -166,25 +193,81 @@
         <field name="postalCode" type="text-short"/>
 
         <relationship type="one" related="customer.contactmech.ContactMech"/>
+
+        <seed-data>
+            <customer.postaladdress.PostalAddress contactMechId="10002" toName="John Doe" attnName="Office" address1="123 Main St"
+                                                  address2="Suite 100"
+                                                  city="Metropolis" postalcode="12345"/>
+            <customer.postaladdress.PostalAddress contactMechId="10005" toName="John Doe" attnName="Home" address1="123 Local St"
+                                                  city="Metropolis" postalcode="12345"/>
+            <customer.postaladdress.PostalAddress contactMechId="10008" toName="SoHo Store" attnName="Home" address1="123 Broome St"
+                                                  city="New York" postalcode="10012"/>
+            <customer.postaladdress.PostalAddress contactMechId="10011" toName="Roronoa Zoro" attnName="Office"
+                                                  address1="123 Wano Street" address2="Egghead Lane"
+                                                  city="New Jersey" postalcode="10477"/>
+        </seed-data>
     </entity>
 
     <entity entity-name="ContactMechPurpose" package="customer.contactmechpurpose">
         <field name="contactMechPurposeId" type="id" is-pk="true"/>
-        <field name="contactMechTypeEnumId" type="id"/>
         <field name="description" type="text-medium"/>
 
-        <relationship type="one" related="moqui.basic.Enumeration" title="contactMechType">
-            <key-map field-name="contactMechTypeEnumId"/>
-        </relationship>
+        <seed-data>
+            <customer.contactmechpurpose.ContactMechPurpose contactMechPurposeId="WORK"
+                                                            description="Work Postal Address"/>
+            <customer.contactmechpurpose.ContactMechPurpose contactMechPurposeId="HOME"
+                                                            description="Home Address"/>
+            <customer.contactmechpurpose.ContactMechPurpose contactMechPurposeId="OFFICE"
+                                                            description="Office address"/>
+            <customer.contactmechpurpose.ContactMechPurpose contactMechPurposeId="EmailPrimary"
+                                                            description="Primary Email"/>
+        </seed-data>
     </entity>
 
     <entity entity-name="PartyContactMech" package="customer.partycontactmech">
         <field name="partyId" type="id" is-pk="true"/>
         <field name="contactMechId" type="id" is-pk="true"/>
         <field name="contactMechPurposeId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date"/>
 
         <relationship type="one" related="customer.party.Party"/>
         <relationship type="one" related="customer.contactmech.ContactMech" short-alias="contactmech"/>
         <relationship type="one" related="customer.contactmechpurpose.ContactMechPurpose" short-alias="purpose"/>
+
+        <seed-data>
+            <customer.partycontactmech.PartyContactMech partyId="PER123" contactMechId="10000"
+                                                        contactMechPurposeId="WORK"
+                                                        fromDate="2010-01-01"/>
+            <customer.partycontactmech.PartyContactMech partyId="PER123" contactMechId="10001"
+                                                        contactMechPurposeId="EmailPrimary" fromDate="2010-01-01"/>
+            <customer.partycontactmech.PartyContactMech partyId="PER005" contactMechId="10002"
+                                                        contactMechPurposeId="OFFICE" fromDate="2010-01-01"/>
+            <customer.partycontactmech.PartyContactMech partyId="PER006" contactMechId="10003" contactMechPurposeId="HOME"
+                                                        fromDate="2011-04-03"/>
+            <customer.partycontactmech.PartyContactMech partyId="PER007" contactMechId="10004"
+                                                        contactMechPurposeId="EmailPrimary"
+                                                        fromDate="2011-04-01"/>
+            <customer.partycontactmech.PartyContactMech partyId="PER008" contactMechId="10005"
+                                                        contactMechPurposeId="OFFICE"
+                                                        fromDate="2010-03-01"/>
+            <customer.partycontactmech.PartyContactMech partyId="PER005" contactMechId="10006" contactMechPurposeId="HOME"
+                                                        fromDate="2010-04-07"/>
+            <customer.partycontactmech.PartyContactMech partyId="ORG456" contactMechId="10007"
+                                                        contactMechPurposeId="OFFICE"
+                                                        fromDate="2010-07-01"/>
+            <customer.partycontactmech.PartyContactMech partyId="ORG001" contactMechId="10008"
+                                                        contactMechPurposeId="HOME"
+                                                        fromDate="2011-11-01"/>
+            <customer.partycontactmech.PartyContactMech partyId="ORG002" contactMechId="10009"
+                                                        contactMechPurposeId="OFFICE"
+                                                        fromDate="2015-08-01"/>
+            <customer.partycontactmech.PartyContactMech partyId="ORG003" contactMechId="10010"
+                                                        contactMechPurposeId="EmailPrimary"
+                                                        fromDate="2010-01-04"/>
+            <customer.partycontactmech.PartyContactMech partyId="ORG004" contactMechId="10011"
+                                                        contactMechPurposeId="WORK"
+                                                        fromDate="2010-02-02"/>
+
+        </seed-data>
     </entity>
 </entities>
