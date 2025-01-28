@@ -7,6 +7,12 @@
         <relationship type="one" related="moqui.basic.Enumeration" title="PartyType" short-alias="type">
             <key-map field-name="partyTypeEnumId"/>
         </relationship>
+        <relationship type="one-nofk" related="customer.person.Person" short-alias="person" mutable="true"/>
+        <relationship type="one-nofk" related="customer.organization.Organization" short-alias="organization"
+                      mutable="true"/>
+        <relationship type="many" related="customer.partyrole.PartyRole" short-alias="roles">
+            <key-map field-name="partyId"/>
+        </relationship>
 
         <seed-data>
             <moqui.basic.EnumerationType description="Party Type" enumTypeId="PartyType"/>
@@ -14,4 +20,30 @@
             <moqui.basic.Enumeration description="Organization" enumId="PtyOrganization" enumTypeId="PartyType"/>
         </seed-data>
      </entity>
+
+    <entity entity-name="Person" package="customer.person" short-alias="person">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="firstName" type="text-short"/>
+        <field name="lastName" type="text-short"/>
+        <field name="birthDate" type="date"/>
+        <relationship type="one" related="customer.party.Party"/>
+    </entity>
+
+    <entity entity-name="Organization" package="customer.organization">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="organizationName" type="text-short"/>
+        <relationship type="one" related="customer.party.Party"/>
+    </entity>
+
+    <entity entity-name="PartyRole" package="customer.partyrole">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <relationship type="one" related="customer.party.Party" short-alias="party"/>
+        <relationship type="one" related="customer.partyroletype.RoleType" short-alias="role"/>
+    </entity>
+
+    <entity entity-name="RoleType" package="customer.partyroletype">
+        <field name="roleTypeId" type="id" is-pk="true"/>
+        <field name="description" type="text-medium"/>
+    </entity>
 </entities>
