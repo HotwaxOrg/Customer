@@ -197,14 +197,14 @@
         <seed-data>
             <customer.postaladdress.PostalAddress contactMechId="10002" toName="John Doe" attnName="Office" address1="123 Main St"
                                                   address2="Suite 100"
-                                                  city="Metropolis" postalcode="12345"/>
+                                                  city="Metropolis" postalCode="12345"/>
             <customer.postaladdress.PostalAddress contactMechId="10005" toName="John Doe" attnName="Home" address1="123 Local St"
-                                                  city="Metropolis" postalcode="12345"/>
+                                                  city="Metropolis" postalCode="12345"/>
             <customer.postaladdress.PostalAddress contactMechId="10008" toName="SoHo Store" attnName="Home" address1="123 Broome St"
-                                                  city="New York" postalcode="10012"/>
+                                                  city="New York" postalCode="10012"/>
             <customer.postaladdress.PostalAddress contactMechId="10011" toName="Roronoa Zoro" attnName="Office"
                                                   address1="123 Wano Street" address2="Egghead Lane"
-                                                  city="New Jersey" postalcode="10477"/>
+                                                  city="New Jersey" postalCode-="10477"/>
         </seed-data>
     </entity>
 
@@ -267,6 +267,9 @@
             <customer.partycontactmech.PartyContactMech partyId="ORG004" contactMechId="10011"
                                                         contactMechPurposeId="WORK"
                                                         fromDate="2010-02-02"/>
+            <customer.partycontactmech.PartyContactMech partyId="PER006" contactMechId="10002"
+                                                        contactMechPurposeId="HOME"
+                                                        fromDate="2011-04-03"/>
 
         </seed-data>
     </entity>
