@@ -204,7 +204,7 @@
                                                   city="New York" postalCode="10012"/>
             <customer.postaladdress.PostalAddress contactMechId="10011" toName="Roronoa Zoro" attnName="Office"
                                                   address1="123 Wano Street" address2="Egghead Lane"
-                                                  city="New Jersey" postalCode-="10477"/>
+                                                  city="New Jersey" postalCode="10477"/>
         </seed-data>
     </entity>
 
