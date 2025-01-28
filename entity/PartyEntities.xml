@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchema="http://moqui.org/xsd/entity-definition-3.xsd">
+    <entity entity-name="Party" package="customer.party" short-alias="parties">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="partyTypeEnumId" type="id"/>
+        <relationship type="one" related="moqui.basic.Enumeration" title="PartyType" short-alias="type">
+            <key-map field-name="partyTypeEnumId"/>
+        </relationship>
+
+        <seed-data>
+            <moqui.basic.EnumerationType description="Party Type" enumTypeId="PartyType"/>
+            <moqui.basic.Enumeration description="Person" enumId="PtyPerson" enumTypeId="PartyType"/>
+            <moqui.basic.Enumeration description="Organization" enumId="PtyOrganization" enumTypeId="PartyType"/>
+        </seed-data>
+     </entity>
+</entities>
