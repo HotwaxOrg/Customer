@@ -36,7 +36,38 @@ if (infoString){
     ef.condition("infoString", EntityCondition.EQUALS, infoString)
 }
 
+if (countryCode){
+    ef.condition("countryCode", EntityCondition.EQUALS, countryCode)
+}
 
+
+if (areaCode){
+    ef.condition("areaCode", EntityCondition.EQUALS, areaCode)
+}
+
+if (contactNumber){
+    ef.condition("contactNumber", EntityCondition.EQUALS, contactNumber)
+}
+
+if (address1){
+    ef.condition(ec.entity.conditionFactory.makeCondition("address1", EntityCondition.LIKE,
+            (leadingWildcard ? "%":"") + address1 + "%"
+    ))
+}
+
+if (address2){
+    ef.condition(ec.entity.conditionFactory.makeCondition("address1", EntityCondition.LIKE,
+            (leadingWildcard ? "%":"") + address2 + "%"
+    ))
+}
+
+if (city){
+    ef.condition("city", EntityCondition.EQUALS, city)
+}
+
+if (postalCode){
+    ef.condition("postalCode", EntityCondition.EQUALS, postalCode)
+}
 
 EntityList el = ef.list() // Getting the list of EntityValue objects
 

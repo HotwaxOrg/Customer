@@ -6,6 +6,13 @@
             <parameter name="firstName" entity="customer.findcustomer.FindCustomerView"/>
             <parameter name="lastName" entity="customer.findcustomer.FindCustomerView"/>
             <parameter name="infoString" entity="customer.findcustomer.FindCustomerView"/>
+            <parameter name="countryCode" entity="customer.findcustomer.FindCustomerView"/>
+            <parameter name="areaCode" entity="customer.findcustomer.FindCustomerView"/>
+            <parameter name="contactNumber" entity="customer.findcustomer.FindCustomerView"/>
+            <parameter name="address1" entity="customer.findcustomer.FindCustomerView"/>
+            <parameter name="address2" entity="customer.findcustomer.FindCustomerView"/>
+            <parameter name="city" entity="customer.findcustomer.FindCustomerView"/>
+            <parameter name="postalCode" entity="customer.findcustomer.FindCustomerView"/>
         </in-parameters>
         <out-parameters>
             <parameter name="partyIdList" type="List"/>
