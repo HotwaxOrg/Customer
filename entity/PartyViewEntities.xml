@@ -35,7 +35,7 @@
         <alias entity-alias="TN" name="areaCode"/>
         <alias entity-alias="TN" name="contactNumber"/>
         <alias entity-alias="PA" name="address1"/>
-        <alias entity-alias="PA" name="address1"/>
+        <alias entity-alias="PA" name="address20"/>
         <alias entity-alias="PA" name="city"/>
         <alias entity-alias="PA" name="postalCode"/>
 
