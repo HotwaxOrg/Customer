@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchema="http://moqui.org/service-definition-3.xsd">
+    <service verb="find" noun="Customer" type="script" location="component://Customer/script/FindCustomer.groovy">
+        <in-parameters>
+            <parameter name="firstName" entity="customer.findcustomer.FindCustomerView"/>
+            <parameter name="lastName" entity="customer.findcustomer.FindCustomerView"/>
+            <parameter name="infoString" entity="customer.findcustomer.FindCustomerView"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="partyIdList" type="List"/>
+        </out-parameters>
+    </service>
+</services>
