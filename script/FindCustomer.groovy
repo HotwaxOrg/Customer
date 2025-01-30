@@ -32,21 +32,34 @@ if (lastName) {
                     "lastName", EntityCondition.LIKE, (leadingWildcard ? "%" : "") + lastName + "%")
                     .ignoreCase())
 }
-if (infoString){
-    ef.condition("infoString", EntityCondition.EQUALS, infoString)
+
+if (emailAddress){
+    ef.condition(
+            ec.entity.conditionFactory.makeCondition(
+                    "emailAddress", EntityCondition.LIKE, (leadingWildcard ? "%" : "") + emailAddress + "%")
+                    .ignoreCase())
 }
 
 if (countryCode){
-    ef.condition("countryCode", EntityCondition.EQUALS, countryCode)
+    ef.condition(
+            ec.entity.conditionFactory.makeCondition(
+                    "countryCode", EntityCondition.LIKE, (leadingWildcard ? "%" : "") + countryCode + "%")
+                    .ignoreCase())
 }
 
 
 if (areaCode){
-    ef.condition("areaCode", EntityCondition.EQUALS, areaCode)
+    ef.condition(
+            ec.entity.conditionFactory.makeCondition(
+                    "areaCode", EntityCondition.LIKE, (leadingWildcard ? "%" : "") + areaCode + "%")
+                    .ignoreCase())
 }
 
 if (contactNumber){
-    ef.condition("contactNumber", EntityCondition.EQUALS, contactNumber)
+    ef.condition(
+            ec.entity.conditionFactory.makeCondition(
+                    "contactNumber", EntityCondition.LIKE, (leadingWildcard ? "%" : "") + contactNumber + "%")
+                    .ignoreCase())
 }
 
 if (address1){
@@ -62,12 +75,21 @@ if (address2){
 }
 
 if (city){
-    ef.condition("city", EntityCondition.EQUALS, city)
+    ef.condition(
+            ec.entity.conditionFactory.makeCondition(
+                    "city", EntityCondition.LIKE, (leadingWildcard ? "%" : "") + city + "%")
+                    .ignoreCase())
 }
 
 if (postalCode){
-    ef.condition("postalCode", EntityCondition.EQUALS, postalCode)
+    ef.condition(
+            ec.entity.conditionFactory.makeCondition(
+                    "postalCode", EntityCondition.LIKE, (leadingWildcard ? "%" : "") + postalCode + "%")
+                    .ignoreCase())
 }
+
+def combinedName = firstName + lastName
+ef.orderBy(combinedName)
 
 EntityList el = ef.list() // Getting the list of EntityValue objects
 
@@ -78,3 +100,15 @@ partyIdList = []
 for (EntityValue ev in el) {
     partyIdList.add(ev.partyId)
 }
+
+if (!pageNoLimit) { ef.offset(pageIndex as int, pageSize as int); ef.limit(pageSize as int) }
+
+
+ec.logger.info("-----------------------------" + pageIndex + "-------------------------")
+partyIdListCount = ef.count()
+partyIdListPageIndex = ef.pageIndex
+partyIdListPageSize = ef.pageSize
+partyIdListPageMaxIndex = ((BigDecimal) (partyIdListCount - 1)).divide(partyIdListPageSize, 0, BigDecimal.ROUND_DOWN) as int
+partyIdListPageRangeLow = partyIdListPageIndex * partyIdListPageSize + 1
+partyIdListPageRangeHigh = (partyIdListPageIndex * partyIdListPageSize) + partyIdListPageSize
+if (partyIdListPageRangeHigh > partyIdListCount) partyIdListPageRangeHigh = partyIdListCount

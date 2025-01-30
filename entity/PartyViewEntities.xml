@@ -13,6 +13,9 @@
         <member-entity entity-alias="PCM" entity-name="customer.partycontactmech.PartyContactMech"
                        join-from-alias="PTY">
             <key-map field-name="partyId"/>
+            <entity-condition>
+                <date-filter entity-alias="PCM" from-field-name="fromDate" thur-field-name="thruDate"/>
+            </entity-condition>
         </member-entity>
         <member-entity entity-alias="CM" entity-name="customer.contactmech.ContactMech"
                        join-from-alias="PCM">
@@ -25,6 +28,7 @@
         <member-entity entity-alias="PA" entity-name="customer.postaladdress.PostalAddress"
                        join-from-alias="CM" join-optional="true">
             <key-map field-name="contactMechId"/>
+
         </member-entity>
 
         <alias entity-alias="PTY" name="partyId"/>
@@ -38,9 +42,11 @@
         <alias entity-alias="PA" name="address2"/>
         <alias entity-alias="PA" name="city"/>
         <alias entity-alias="PA" name="postalCode"/>
+        <alias entity-alias="PCM" name="thruDate"/>
 
         <entity-condition>
-            <econdition entity-alias="PRL" field-name="roleTypeId" operator="=" value="CUSTOMER"/>
+            <econdition entity-alias="PRL" field-name="roleTypeId" operator="EQUALS" value="CUSTOMER"/>
         </entity-condition>
+
     </view-entity>
 </entities>
