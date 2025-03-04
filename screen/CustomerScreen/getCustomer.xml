@@ -7,11 +7,15 @@
         <default-response url="../customerDetails"/>
     </transition>
 
+<!--    <transition name="findCustomer">-->
+<!--        <service-call name="PartyServices.find#Customers"/>-->
+<!--        <default-response type="none"/>-->
+<!--    </transition>-->
+
 
     <actions>
         <service-call name="PartyServices.find#Customers" in-map="[firstName: firstName,
         lastName: lastName, emailAddress: emailAddress, city: city]" out-map="context"/>
-        <log message="${context.customerList}"/>
     </actions>
 
     <widgets>
@@ -36,7 +40,7 @@
                         </default-field>
                     </field>
                     <field name="findCustomer">
-                        <default-field>
+                        <default-field >
                             <submit/>
                         </default-field>
                     </field>

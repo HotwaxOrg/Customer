@@ -2,8 +2,69 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xml-screen-3.xsd"
         require-authentication="anonymous-all">
     <parameter name="partyId"/>
+    <actions>
+        <service-call name="PartyServices.find#CustomerDetails" in-map="[partyId: partyId]" out-map="context"/>
+    </actions>
 
     <widgets>
-       <label text="${partyId}"/>
+        <label style="h1" text="Customer Details"/>
+        <container-box>
+            <box-header title="Customers"/>
+            <box-body-nopad>
+                <form-list name="PartyList" list="customerDetailList">
+                    <field name="partyId">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="firstName">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="lastName">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="infoString">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="address1">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="address2">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="city">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="postalCode">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="contactNumber">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="thruDate">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                </form-list>
+            </box-body-nopad>
+        </container-box>
     </widgets>
+
 </screen>

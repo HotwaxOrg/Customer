@@ -15,6 +15,9 @@
         <relationship type="many" related="customer.partyrole.PartyRole" short-alias="roles">
             <key-map field-name="partyId"/>
         </relationship>
+        <relationship type="many" related="customer.partycontactmech.PartyContactMech" short-alias="partycm">
+            <key-map field-name="partyId"/>
+        </relationship>
 
         <seed-data>
             <moqui.basic.EnumerationType description="Party Type" enumTypeId="PartyType"/>
@@ -27,6 +30,7 @@
             <detail relationship="person"/>
             <detail relationship="organization"/>
             <detail relationship="roles"/>
+            <detail relationship="partycm"/>
         </master>
      </entity>
 
@@ -89,6 +93,7 @@
             <detail relationship="type"/>
             <detail relationship="telecomnumber"/>
             <detail relationship="postaladdress"/>
+            <detail relationship="parties"/>
         </master>
     </entity>
 
@@ -126,7 +131,7 @@
         <field name="thruDate" type="date"/>
 
 
-        <relationship type="one" related="customer.party.Party"/>
+        <relationship type="one" related="customer.party.Party" short-alias="partycontactmech"/>
         <relationship type="one" related="customer.contactmech.ContactMech" short-alias="contactmech"/>
         <relationship type="one" related="customer.contactmechpurpose.ContactMechPurpose" short-alias="purpose"/>
     </entity>
