@@ -2,7 +2,6 @@
 import org.moqui.context.ExecutionContext
 import org.moqui.entity.EntityCondition // To implement condition
 import org.moqui.entity.EntityFind // To implement find
-import org.moqui.entity.EntityList //To get the list of EntityValue objects
 import org.moqui.entity.EntityValue // To access a single record in the database
 
 ExecutionContext ec =  context.ec // Getting the execution context
@@ -40,19 +39,67 @@ if (ev_cm){
     ev_pr.set('roleTypeId', 'CUSTOMER')
     ev_pr.create()
 
-    // Creating a record in contact mech
+    // Creating email address
     EntityValue ev_cm_1 = ec.entity.makeValue('customer.contactmech.ContactMech')
-    def contactMechId = ec.entity.sequencedIdPrimary('customer.contactmech.ContactMech', null, null)
-    ev_cm_1.set('contactMechId', contactMechId)
+    def contactMechId1 = ec.entity.sequencedIdPrimary('customer.contactmech.ContactMech', null, null)
+    ev_cm_1.set('contactMechId', contactMechId1)
     ev_cm_1.set('contactMechTypeEnumId', 'ctyEmailAddress')
     ev_cm_1.set('infoString', emailAddress)
     ev_cm_1.create()
 
-    // Creating a record in party contact mech
-    EntityValue ev_pcm = ec.entity.makeValue('customer.partycontactmech.PartyContactMech')
-    ev_pcm.set('partyId', partyId)
-    ev_pcm.set('contactMechId', contactMechId)
-    ev_pcm.set('contactMechPurposeId', 'EmailPrimary')
-    ev_pcm.set('fromDate', System.currentTimeMillis())
-    ev_pcm.create()
+    EntityValue ev_pcm_1 = ec.entity.makeValue('customer.partycontactmech.PartyContactMech')
+    ev_pcm_1.set('partyId', partyId)
+    ev_pcm_1.set('contactMechId', contactMechId1)
+    ev_pcm_1.set('contactMechPurposeId', 'PRIMARY_EMAIL')
+    ev_pcm_1.set('fromDate', System.currentTimeMillis())
+    ev_pcm_1.create()
+
+    // --------
+    // Creating postal address
+    EntityValue ev_cm_2 = ec.entity.makeValue('customer.contactmech.ContactMech')
+    def contactMechId2 = ec.entity.sequencedIdPrimary('customer.contactmech.ContactMech', null, null)
+    ev_cm_2.set('contactMechId', contactMechId2)
+    ev_cm_2.set('contactMechTypeEnumId', 'ctyPostalAddress')
+    ev_cm_2.create()
+
+    EntityValue postalAddress = ec.entity.makeValue('customer.postaladdress.PostalAddress')
+    postalAddress.set('contactMechId', contactMechId2)
+    postalAddress.set('address1', address1)
+    if (address2){
+        postalAddress.set('address2', address2)
+    }
+    postalAddress.set('city', city)
+    postalAddress.set('postalCode', postalCode)
+    postalAddress.create()
+
+    EntityValue ev_pcm_2 = ec.entity.makeValue('customer.partycontactmech.PartyContactMech')
+    ev_pcm_2.set('partyId', partyId)
+    ev_pcm_2.set('contactMechId', contactMechId2)
+    ev_pcm_2.set('contactMechPurposeId', 'PRIMARY_LOCATION')
+    ev_pcm_2.set('fromDate', System.currentTimeMillis())
+    ev_pcm_2.create()
+
+    // Creating Telecom Number
+    if (contactNumber.length() > 10 || contactNumber.length() < 10){
+        ec.message.addError("Invalid contact number. It must be 10 digits.")
+    }
+    EntityValue ev_cm_3 = ec.entity.makeValue('customer.contactmech.ContactMech')
+    def contactMechId3 = ec.entity.sequencedIdPrimary('customer.contactmech.ContactMech', null, null)
+    ev_cm_3.set('contactMechId', contactMechId3)
+    ev_cm_3.set('contactMechTypeEnumId', 'ctyTelecomNumber')
+    ev_cm_3.create()
+
+    EntityValue telecomNumber = ec.entity.makeValue('customer.telecomnumber.TelecomNumber')
+    telecomNumber.set('contactMechId', contactMechId3)
+    telecomNumber.set('countryCode', countryCode)
+    telecomNumber.set('areaCode', areaCode)
+    telecomNumber.set('contactNumber', contactNumber)
+    telecomNumber.create()
+
+    EntityValue ev_pcm_3 = ec.entity.makeValue('customer.partycontactmech.PartyContactMech')
+    ev_pcm_3.set('partyId', partyId)
+    ev_pcm_3.set('contactMechId', contactMechId3)
+    ev_pcm_3.set('contactMechPurposeId', 'PRIMARY_PHONE')
+    ev_pcm_3.set('fromDate', System.currentTimeMillis())
+    ev_pcm_3.create()
 }

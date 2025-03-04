@@ -36,6 +36,13 @@
             <parameter name="firstName" required="true" />
             <parameter name="lastName" required="true" />
             <parameter name="emailAddress" required="true"/>
+            <parameter name="address1" required="true"/>
+            <parameter name="address2"/>
+            <parameter name="city" required="true"/>
+            <parameter name="postalCode" required="true"/>
+            <parameter name="countryCode" required="true"/>
+            <parameter name="areaCode" required="true"/>
+            <parameter name="contactNumber" required="true"/>
         </in-parameters>
         <out-parameters>
             <parameter name="partyId"/>
