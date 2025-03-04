@@ -2,9 +2,15 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xml-screen-3.xsd"
         require-authentication="anonymous-all">
 
+    <!-- Transition to Detail screen -->
     <transition name="customerDetail">
         <path-parameter name="partyId"/>
         <default-response url="../customerDetails"/>
+    </transition>
+
+    <transition name="createCustomer">
+        <service-call name="PartyServices.create#Customer"/>
+        <default-response type="none"/>
     </transition>
 
 <!--    <transition name="findCustomer">-->
@@ -12,13 +18,15 @@
 <!--        <default-response type="none"/>-->
 <!--    </transition>-->
 
-
+    
+    <!-- Preparing the customer data -->
     <actions>
         <service-call name="PartyServices.find#Customers" in-map="[firstName: firstName,
         lastName: lastName, emailAddress: emailAddress, city: city]" out-map="context"/>
     </actions>
 
     <widgets>
+        <!-- Initial filters to get the customers -->
         <container-box>
             <box-header title="Enter Customer Details"/>
             <box-body-nopad>
@@ -47,7 +55,8 @@
                 </form-single>
             </box-body-nopad>
         </container-box>
-
+        
+        <!-- Displayin the customers -->
         <container-box>
             <box-header title="Customers"/>
             <box-body-nopad>
@@ -78,6 +87,70 @@
                         </default-field>
                     </field>
                 </form-list>
+            </box-body-nopad>
+        </container-box>
+        
+        <!-- Creating a customer -->
+        <container-box>
+            <box-header title="Create Customer"/>
+            <box-body-nopad>
+                <form-single name="CreateCustomer" transition="createCustomer">
+                    <field name="firstName">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="lastName">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="emailAddress">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="address1">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="address2">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="city">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="postalCode">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="countryCode">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="areaCode">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="contactNumber">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="createCustomer">
+                        <default-field>
+                            <submit/>
+                        </default-field>
+                    </field>
+                </form-single>
             </box-body-nopad>
         </container-box>
     </widgets>
