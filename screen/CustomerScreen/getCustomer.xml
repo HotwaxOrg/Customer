@@ -1,8 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xml-screen-3.xsd" require-authentication="anonymous-all">
-    
-    
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xml-screen-3.xsd"
+        require-authentication="anonymous-all">
+
+    <transition name="customerDetail">
+        <path-parameter name="partyId"/>
+        <default-response url="../customerDetails"/>
+    </transition>
+
+
+    <actions>
+        <service-call name="PartyServices.find#Customers" in-map="[firstName: firstName,
+        lastName: lastName, emailAddress: emailAddress, city: city]" out-map="context"/>
+        <log message="${context.customerList}"/>
+    </actions>
+
     <widgets>
-        <label text="Customer"/>
+        <container-box>
+            <box-header title="Enter Customer Details"/>
+            <box-body-nopad>
+                <form-single name="GetCustomer" transition=".">
+                    <field name="firstName">
+                        <default-field><text-line/></default-field>
+                    </field>
+                    <field name="lastName">
+                        <default-field><text-line/></default-field>
+                    </field>
+                    <field name="emailAddress">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="city">
+                        <default-field>
+                            <text-line/>
+                        </default-field>
+                    </field>
+                    <field name="findCustomer">
+                        <default-field>
+                            <submit/>
+                        </default-field>
+                    </field>
+                </form-single>
+            </box-body-nopad>
+        </container-box>
+
+        <container-box>
+            <box-header title="Customers"/>
+            <box-body-nopad>
+                <form-list name="PartyList" list="customerList">
+                    <field name="view">
+                        <default-field>
+                            <link url="customerDetail" text="view" link-type="anchor"/>
+                        </default-field>
+                    </field>
+                    <field name="partyId">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="firstName">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="lastName">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="infoString">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                </form-list>
+            </box-body-nopad>
+        </container-box>
     </widgets>
 </screen>

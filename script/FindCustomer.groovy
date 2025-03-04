@@ -5,6 +5,8 @@ import org.moqui.entity.EntityFind // To implement find
 import org.moqui.entity.EntityList //To get the list of EntityValue objects
 import org.moqui.entity.EntityValue // To access a single record in the database
 
+
+ec.logger.info("-----Service was called-----")
 ExecutionContext ec =  context.ec // Getting the execution context
 
 // Finding our Customer View entity
@@ -36,7 +38,7 @@ if (lastName) {
 if (emailAddress){
     ef.condition(
             ec.entity.conditionFactory.makeCondition(
-                    "emailAddress", EntityCondition.LIKE, (leadingWildcard ? "%" : "") + emailAddress + "%")
+                    "infoString", EntityCondition.LIKE, (leadingWildcard ? "%" : "") + emailAddress + "%")
                     .ignoreCase())
 }
 
@@ -88,8 +90,8 @@ if (postalCode){
                     .ignoreCase())
 }
 
-def combinedName = firstName + lastName
-ef.orderBy(combinedName)
+//def combinedName = firstName + lastName
+//ef.orderBy(combinedName)
 
 EntityList el = ef.list() // Getting the list of EntityValue objects
 
@@ -97,14 +99,12 @@ EntityList el = ef.list() // Getting the list of EntityValue objects
 partyIdList = []
 
 // Iterate over the EntityList and add partyId values to the list
-for (EntityValue ev in el) {
-    partyIdList.add(ev.partyId)
-}
+partyIdList.add(el)
 
 if (!pageNoLimit) { ef.offset(pageIndex as int, pageSize as int); ef.limit(pageSize as int) }
 
 
-ec.logger.info("-----------------------------" + pageIndex + "-------------------------")
+ec.logger.info("-----------------------------" + el + "-------------------------")
 partyIdListCount = ef.count()
 partyIdListPageIndex = ef.pageIndex
 partyIdListPageSize = ef.pageSize

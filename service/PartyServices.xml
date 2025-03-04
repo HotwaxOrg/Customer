@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchema="http://moqui.org/service-definition-3.xsd">
+          xsi:noNamespaceSchemaLocation="http://moqui.org/service-definition-3.xsd">
     <service verb="find" noun="Customer" type="script" location="component://Customer/script/FindCustomer.groovy">
         <in-parameters>
-            <parameter name="firstName" entity="customer.findcustomer.FindCustomerView"/>
-            <parameter name="lastName" entity="customer.findcustomer.FindCustomerView"/>
-            <parameter name="emailAddress" entity="customer.findcustomer.FindCustomerView"/>
-            <parameter name="countryCode" entity="customer.findcustomer.FindCustomerView"/>
-            <parameter name="areaCode" entity="customer.findcustomer.FindCustomerView"/>
-            <parameter name="contactNumber" entity="customer.findcustomer.FindCustomerView"/>
-            <parameter name="address1" entity="customer.findcustomer.FindCustomerView"/>
-            <parameter name="address2" entity="customer.findcustomer.FindCustomerView"/>
-            <parameter name="city" entity="customer.findcustomer.FindCustomerView"/>
-            <parameter name="postalCode" entity="customer.findcustomer.FindCustomerView"/>
+            <parameter name="firstName" entity-name="customer.findcustomer.FindCustomerView"/>
+            <parameter name="lastName" entity-name="customer.findcustomer.FindCustomerView"/>
+            <parameter name="emailAddress"/>
+            <parameter name="countryCode" entity-name="customer.findcustomer.FindCustomerView"/>
+            <parameter name="areaCode" entity-name="customer.findcustomer.FindCustomerView"/>
+            <parameter name="contactNumber" entity-name="customer.findcustomer.FindCustomerView"/>
+            <parameter name="address1" entity-name="customer.findcustomer.FindCustomerView"/>
+            <parameter name="address2" entity-name="customer.findcustomer.FindCustomerView"/>
+            <parameter name="city" entity-name="customer.findcustomer.FindCustomerView"/>
+            <parameter name="postalCode" entity-name="customer.findcustomer.FindCustomerView"/>
             <parameter name="leadingWildcard" type="boolean" default="false"/>
             <parameter name="pageIndex" type="Integer" default="0"/>
             <parameter name="pageSize" type="Integer" default="20"/>
@@ -60,5 +60,28 @@
         <out-parameters>
             <parameter name="emailAddress"/>
         </out-parameters>
+    </service>
+
+    <service verb="find" noun="Customers">
+        <in-parameters>
+            <parameter name="firstName" />
+            <parameter name="lastName"/>
+            <parameter name="emailAddress"/>
+            <parameter name="city"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="customerList" type="List" required="true"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="customer.findcustomer.FindCustomerView" list="customerList">
+                <econditions combine="or">
+                    <econdition field-name="firstName" operator="like" value="%${firstName}%" ignore-if-empty="true"/>
+                    <econdition field-name="lastName" operator="like" value="%${lastName}%" ignore-if-empty="true"/>
+                    <econdition field-name="infoString" operator="like" value="%${emailAddress}%" ignore-if-empty="true"/>
+                    <econdition field-name="city" operator="like" value="%${city}%" ignore-if-empty="true"/>
+                </econditions>
+            </entity-find>
+            <log message="--------${customerList}-------"/>
+        </actions>
     </service>
 </services>
