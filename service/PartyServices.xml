@@ -97,13 +97,49 @@
             <parameter name="partyId" required="true"/>
         </in-parameters>
         <out-parameters>
-            <parameter name="customerDetailList" type="List" required="true"/>
+            <parameter name="resultList" type="List" required="true"/>
+
         </out-parameters>
         <actions>
-            <!-- Getting the roles of a party as customer -->
-            <entity-find entity-name="FindCustomerView" list="customerDetailList">
+            <!-- Getting the personal detail of a party as customer -->
+            <entity-find entity-name="customer.person.Person" list="personalDetailsList">
+                <econdition field-name="partyId" from="partyId"/>
+                <select-field field-name="firstName"/>
+                <select-field field-name="lastName"/>
+                <select-field field-name="birthDate"/>
+                <select-field field-name="partyId"/>
+            </entity-find>
+
+
+            <!-- Getting the contact details of the customer -->
+            <entity-find entity-name="customer.partycontactmech.PartyContactMech" list="partyContactMechList">
                 <econdition field-name="partyId" from="partyId"/>
             </entity-find>
+            <entity-find entity-name="customer.contactmech.ContactMech" list="emailAddressList">
+                <econditions>
+                    <econdition field-name="contactMechId" from="partyContactMechList.contactMechId"/>
+                    <econdition field-name="contactMechTypeEnumId" value="CtyEmailAddress"/>
+                </econditions>
+            </entity-find>
+            <entity-find entity-name="customer.postaladdress.PostalAddress" list="postalAddressList">
+                <econditions>
+                    <econdition field-name="contactMechId" from="partyContactMechList.contactMechId"/>
+                </econditions>
+            </entity-find>
+            <entity-find entity-name="customer.telecomnumber.TelecomNumber" list="telecomNumberList">
+                <econditions>
+                    <econdition field-name="contactMechId" from="partyContactMechList.contactMechId"/>
+                </econditions>
+            </entity-find>
+
+
+            <set field="resultList" from="[]"/>
+            <script>
+                resultList.add(personalDetails:personalDetailsList)
+                resultList.add(emailAddress:emailAddressList)
+                resultList.add(postalAddress:postalAddressList)
+                resultList.add(telecomNumber:telecomNumberList)
+            </script>
         </actions>
     </service>
 </services>

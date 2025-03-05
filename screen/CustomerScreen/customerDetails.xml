@@ -7,11 +7,10 @@
     </actions>
 
     <widgets>
-        <label style="h1" text="Customer Details"/>
         <container-box>
-            <box-header title="Customers"/>
+            <box-header title="Personal Details"/>
             <box-body-nopad>
-                <form-list name="PartyList" list="customerDetailList">
+                <form-list name="PersonalDetails" list="resultList.personalDetails[0]">
                     <field name="partyId">
                         <default-field>
                             <display/>
@@ -27,7 +26,32 @@
                             <display/>
                         </default-field>
                     </field>
+                    <field name="birthDate">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                </form-list>
+            </box-body-nopad>
+        </container-box>
+
+        <container-box>
+            <box-header title="Contact Details"/>
+            <box-body-nopad>
+                <form-list name="EmailDetails" list="resultList.emailAddress[1]">
+                    <field name="contactMechId">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
                     <field name="infoString">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                </form-list>
+                <form-list name="PostalDetails" list="resultList.postalAddress[2]">
+                    <field name="contactMechId">
                         <default-field>
                             <display/>
                         </default-field>
@@ -52,12 +76,24 @@
                             <display/>
                         </default-field>
                     </field>
-                    <field name="contactNumber">
+                </form-list>
+                <form-list name="TelecomDetails" list="resultList.telecomNumber[3]">
+                    <field name="contactMechId">
                         <default-field>
                             <display/>
                         </default-field>
                     </field>
-                    <field name="thruDate">
+                    <field name="countryCode">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="areaCode">
+                        <default-field>
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="contactNumber">
                         <default-field>
                             <display/>
                         </default-field>
@@ -65,6 +101,8 @@
                 </form-list>
             </box-body-nopad>
         </container-box>
+
     </widgets>
 
 </screen>
+
